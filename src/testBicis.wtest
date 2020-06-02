@@ -1,0 +1,71 @@
+import bicis.*
+import deposito.*
+import accesorios.*
+
+test "Bicis" {
+	const biciRodado28 = new Bicicleta()
+	const biciRodado26 = new Bicicleta()
+	const biciRodado20 = new Bicicleta()
+	
+	
+	biciRodado28.rodado(28)
+	biciRodado28.largo(150)
+	biciRodado28.marca('Olmo')
+	const farolitoBici28 = new Farolito()
+	biciRodado28.cargarAccesorio(farolitoBici28)
+		
+	biciRodado26.rodado(26)
+	biciRodado26.largo(110)
+	biciRodado26.marca('Legnano')
+	const farolitoBici26 = new Farolito()
+	const canastoBici26 = new Canasto()
+	canastoBici26.volumen(8)
+	const morralBicis26 = new MorralBici()
+	morralBicis26.largo(21)
+	morralBicis26.tieneOjoDeGato()
+	biciRodado26.cargarAccesorio(farolitoBici26)
+	biciRodado26.cargarAccesorio(canastoBici26)
+	biciRodado26.cargarAccesorio(morralBicis26)
+	
+	biciRodado20.rodado(20)
+	biciRodado20.largo(90)
+	biciRodado20.marca('Legnano')
+	const morralBicis20 = new MorralBici()
+	morralBicis20.largo(6)
+	biciRodado20.cargarAccesorio(morralBicis20)
+	
+	assert.equals(85,biciRodado28.altura())
+	assert.equals(34,biciRodado28.velocidadCrucero())
+	assert.equals(0,biciRodado28.carga())
+	assert.equals(14.5,biciRodado28.peso())
+	assert.that(biciRodado28.tieneLuz())
+	assert.equals(1,biciRodado28.accesoriosLiviano())
+	
+	assert.equals(80,biciRodado26.altura())
+	assert.equals(28,biciRodado26.velocidadCrucero())
+	assert.equals(23,biciRodado26.carga())
+	assert.equals(15.5,biciRodado26.peso())
+	assert.that(biciRodado26.tieneLuz())
+	assert.equals(2,biciRodado26.accesoriosLiviano())
+	
+	assert.equals(65,biciRodado20.altura())
+	assert.equals(22,biciRodado20.velocidadCrucero())
+	assert.equals(2,biciRodado20.carga())
+	assert.equals(11.2,biciRodado20.peso())
+	assert.notThat(biciRodado20.tieneLuz())
+	assert.equals(0,biciRodado20.accesoriosLiviano())
+	
+	const deposito1 = new Deposito()
+	deposito1.agregarALaColeccion(biciRodado28)
+	deposito1.agregarALaColeccion(biciRodado26)
+	deposito1.agregarALaColeccion(biciRodado20)
+	
+	assert.equals([biciRodado28,biciRodado26], deposito1.bicisMasRapidas())
+	assert.equals(#{"Olmo","Legnano"},deposito1.coleccionDeMarcas())
+	assert.that(deposito1.cualBicicletaSoportaLaCarga(10))
+	assert.notThat(deposito1.cualBicicletaSoportaLaCarga(50))
+	deposito1.quitarDeLaColecion(biciRodado20)
+	assert.that(deposito1.elDepositoEsNocturno())
+	//assert.that(true)
+
+}
